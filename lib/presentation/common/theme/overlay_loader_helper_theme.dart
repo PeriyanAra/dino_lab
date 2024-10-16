@@ -8,7 +8,7 @@ class OverlayLoaderHelperTheme extends ThemeExtension<OverlayLoaderHelperTheme> 
 
   final DinoLabColorTheme _colorTheme;
 
-  Color get backgroundColor => _colorTheme.primary.compLight.withOpacity(0.1);
+  Color get backgroundColor => _colorTheme.primary.compLight.withOpacity(0.4);
   Color get loaderColor => _colorTheme.primary;
 
 

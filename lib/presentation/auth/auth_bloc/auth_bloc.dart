@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:domain/domain_layer.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -34,7 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await _authRepository.login(loginRequestEntity: loginRequestEntity);
 
     response.when(
-      success: (_) => event.onSuccess(),
+      success: (_) => emit(AuthState.loaded()),
       failure: (f) => emit(
         AuthState.error(
           errorMessage: f.errorMessage,
@@ -56,10 +55,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final response = await _authRepository.register(
         registerRequestEntity: registerRequestEntity);
     response.when(
-      success: (_) => event.onSuccess(),
+      success: (_) => emit(AuthState.loaded()),
       failure: (f) => emit(
         AuthState.error(
-          errorMessage: 'asdfgashdgja',
+          errorMessage: f.errorMessage,
         ),
       ),
     );

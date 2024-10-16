@@ -29,87 +29,128 @@ class RegistrationScreenContent extends StatefulWidget {
 }
 
 class _RegistrationScreenContentState extends State<RegistrationScreenContent> {
-  late final TextEditingController passwordController;
-  late final TextEditingController loginController;
-  late final TextEditingController nameController;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _loginController;
+  late final TextEditingController _nameController;
+  late final OverlayLoaderHelper _overlayLoaderHelper;
+  late final GlobalKey<FormState> _registerFromKey;
+  bool _showRemoteError = false;
 
   @override
   void initState() {
     super.initState();
 
-    loginController = TextEditingController();
-    passwordController = TextEditingController();
-    nameController = TextEditingController();
+    _loginController = TextEditingController();
+    _passwordController = TextEditingController();
+    _nameController = TextEditingController();
+    _overlayLoaderHelper = OverlayLoaderHelper();
+    _registerFromKey = GlobalKey<FormState>();
   }
 
   @override
   Widget build(BuildContext context) {
     final authScreensTheme = AuthScreensTheme.of(context);
 
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Align(
-              alignment: Alignment(1, 0),
-              child: Image.asset(
-                'assets/images/logo.png',
-                width: 100.0,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          child: BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              switch (state) {
+                case AuthLoadingState():
+                  _overlayLoaderHelper.show(context);
+                case AuthLoadedState():
+                  _overlayLoaderHelper.hide();
+                  context.router.replaceAll([PageRouteInfo('authenticated')]);
+                case AuthErrorState():
+                  _showRemoteError = true;
+                  _overlayLoaderHelper.hide();
+                default:
+                  _overlayLoaderHelper.hide();
+              }
+            },
+            child: Form(
+              key: _registerFromKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  HBox(height: 20.0),
+                  Text(
+                    'Log in',
+                    style: authScreensTheme.titleTextStyle,
+                  ),
+                  HBox(height: 40.0),
+                  InputFiledSection(
+                    controller: _loginController,
+                    hintText: 'Login',
+                    title: 'Login, email or mobile number',
+                    validator: (text) => text.defaultInputValidator(),
+                    onChanged: (value) {
+                      setState(() {
+                        _showRemoteError = false;
+                      });
+                    },
+                  ),
+                  HBox(height: 20.0),
+                  InputFiledSection(
+                    controller: _passwordController,
+                    title: 'Password',
+                    hintText: 'Password',
+                    isPasswordField: true,
+                    validator: (text) => text.defaultInputValidator(),
+                    onChanged: (value) {
+                      setState(() {
+                        _showRemoteError = false;
+                      });
+                    },
+                  ),
+                  HBox(height: 20.0),
+                  BlocBuilder<AuthBloc, AuthState>(
+                    builder: (context, state) {
+                      return InputFiledSection(
+                        controller: _nameController,
+                        title: 'Name',
+                        hintText: 'Name',
+                        validator: (text) => text.defaultInputValidator(),
+                        errorText: _showRemoteError
+                            ? (state is AuthErrorState
+                                ? state.errorMessage
+                                : null)
+                            : null,
+                      );
+                    },
+                  ),
+                  HBox(height: 20.0),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50.0,
+                    child: PrimaryButton(
+                      onTap: _onSignUpTap,
+                      text: 'SIGN UP',
+                    ),
+                  ),
+                ],
               ),
             ),
-            HBox(height: 20.0),
-            Text(
-              'Log in',
-              style: authScreensTheme.titleTextStyle,
-            ),
-            
-            HBox(height: 40.0),
-            InputFiledSection(
-              hintText: 'Login',
-              title: 'Login, email or mobile number',
-              controller: loginController,
-              errorText: validateText(nameController.text),
-            ),
-            HBox(height: 20.0),
-            InputFiledSection(
-              title: 'Password',
-              hintText: 'Password',
-              controller: passwordController,
-              isPasswordField: true,
-              errorText: validateText(nameController.text),
-            ),
-            HBox(height: 20.0),
-            InputFiledSection(
-              controller: nameController,
-              title: 'Name',
-              hintText: 'Name',
-              isPasswordField: true,
-              errorText: validateText(nameController.text),
-            ),
-            HBox(height: 20.0),
-            SizedBox(
-              width: double.infinity,
-              height: 50.0,
-              child: PrimaryButton(
-                onTap: () {},
-                text: 'SIGN UP',
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  String? validateText(String value) {
-    if (value.isEmpty) {
-      return 'Text must be at least 1 character long';
-    } else if (value.length > 50) {
-      return 'Text must not exceed 50 characters';
-    }
+  void _onSignUpTap() {
+    final isValid = _registerFromKey.currentState?.validate() ?? false;
 
-    return null;
+    if (!isValid) return;
+
+    context.read<AuthBloc>().add(
+          AuthEvent.register(
+            email: _loginController.text,
+            password: _passwordController.text,
+            name: _nameController.text,
+          ),
+        );
   }
 }

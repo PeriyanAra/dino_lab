@@ -8,6 +8,8 @@ class InputFiledSection extends StatelessWidget {
   final String title;
   final bool isPasswordField;
   final String? errorText;
+  final FormFieldValidator<String>? validator;
+  final ValueChanged<String>? onChanged;
 
   const InputFiledSection({
     super.key,
@@ -16,6 +18,8 @@ class InputFiledSection extends StatelessWidget {
     required this.controller,
     this.isPasswordField = false,
     this.errorText,
+    this.validator,
+    this.onChanged,
   });
 
   @override
@@ -35,6 +39,8 @@ class InputFiledSection extends StatelessWidget {
           hintText: hintText,
           isPasswordField: isPasswordField,
           errorText: errorText,
+          validator: validator,
+          onChanged: onChanged,
         ),
       ],
     );
