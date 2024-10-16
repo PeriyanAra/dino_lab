@@ -30,4 +30,11 @@ class AuthLocalDataSource extends AuthDataSource {
       value: authResponseDto.accessToken,
     );
   }
+
+  @override
+  Future<Result<void, FailureResult>> logout() {
+    return _secureStorage.delete(
+      key: SecureStorageConstants.accessTokenKey,
+    );
+  }
 }

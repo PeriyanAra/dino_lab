@@ -6,35 +6,29 @@ class AppRouter extends RootStackRouter {
   @override
   final List<AutoRoute> routes = [
     AutoRoute(
-      page: EmptyShellRoute('main'),
-      path: '/',
+      page: EmptyShellRoute('authenticated'),
+      path: '/authenticated',
       children: [
         AutoRoute(
-          page: EmptyShellRoute('authenticated'),
-          path: 'authenticated',
-          children: [
-            AutoRoute(
-              initial: true,
-              page: HomeRoute.page,
-              path: 'home',
-            ),
-          ],
+          initial: true,
+          page: HomeRoute.page,
+          path: 'home',
+        ),
+      ],
+    ),
+    AutoRoute(
+      initial: true,
+      page: EmptyShellRoute('unauthenticated'),
+      path: '/unauthenticated',
+      children: [
+        AutoRoute(
+          page: RegistrationRoute.page,
+          path: 'register',
         ),
         AutoRoute(
           initial: true,
-          page: EmptyShellRoute('unauthenticated'),
-          path: 'unauthenticated',
-          children: [
-            AutoRoute(
-              page: RegistrationRoute.page,
-              path: 'register',
-            ),
-            AutoRoute(
-              initial: true,
-              page: LoginRoute.page,
-              path: 'login',
-            ),
-          ],
+          page: LoginRoute.page,
+          path: 'login',
         ),
       ],
     ),

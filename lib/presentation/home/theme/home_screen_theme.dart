@@ -17,7 +17,7 @@ class HomeScreenTheme extends ThemeExtension<HomeScreenTheme> {
       _textTheme.displaySmall.copyWith(fontWeight: FontWeight.w300);
   double get logoutButtonWidth => 200.0;
   double get logoutButtonHeight => 50.0;
-  double get spaceBetweenAvatarAndUserName => 15.0;
+  double get space => 15.0;
   EdgeInsets get errorContentPadding => EdgeInsets.all(16);
 
   @override

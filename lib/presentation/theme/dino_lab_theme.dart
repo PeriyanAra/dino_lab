@@ -35,6 +35,9 @@ class DinoLabTheme {
       colorTheme: colorTheme,
       textTheme: textTheme,
     );
+    final dialogHelperTheme = DialogHelperTheme(
+      colorTheme: colorTheme,
+    );
 
     return ThemeData(
       useMaterial3: true,
@@ -55,6 +58,7 @@ class DinoLabTheme {
         overlayLoaderHelperTheme,
         homeScreenTheme,
         dinoLabAppBarTheme,
+        dialogHelperTheme,
       ],
       textTheme: TextTheme(),
     );
@@ -90,6 +94,9 @@ class DinoLabTheme {
       colorTheme: colorTheme,
       textTheme: textTheme,
     );
+    final dialogHelperTheme = DialogHelperTheme(
+      colorTheme: colorTheme,
+    );
 
     return ThemeData(
       useMaterial3: true,
@@ -110,6 +117,7 @@ class DinoLabTheme {
         overlayLoaderHelperTheme,
         homeScreenTheme,
         dinoLabAppBarTheme,
+        dialogHelperTheme,
       ],
     );
   }
