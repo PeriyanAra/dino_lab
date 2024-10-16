@@ -8,6 +8,8 @@ class DinoLabInputField extends StatefulWidget {
   final String hintText;
   final bool isPasswordField;
   final String? errorText;
+  final FormFieldValidator<String>? validator;
+  final ValueChanged<String>? onChanged;
 
   const DinoLabInputField({
     super.key,
@@ -15,6 +17,8 @@ class DinoLabInputField extends StatefulWidget {
     required this.hintText,
     this.isPasswordField = false,
     this.errorText,
+    this.validator,
+    this.onChanged,
   });
 
   @override
@@ -28,9 +32,12 @@ class _DinoLabInputFieldState extends State<DinoLabInputField> {
   Widget build(BuildContext context) {
     final inputTheme = DinoLabInputFieldTheme.of(context);
 
-    return TextField(
+    return TextFormField(
       controller: widget.textEditingController,
       style: inputTheme.primaryTextStyle,
+      validator:  widget.validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: widget.onChanged,
       decoration: InputDecoration(
         hintText: widget.hintText,
         enabledBorder: inputTheme.enabledBorder,
@@ -62,7 +69,6 @@ class _DinoLabInputFieldState extends State<DinoLabInputField> {
             : null,
         hintStyle: inputTheme.hintTextStyle,
       ),
-      onTapOutside: (_) => FocusScope.of(context).unfocus(),
       obscureText: widget.isPasswordField && isRevealed,
     );
   }

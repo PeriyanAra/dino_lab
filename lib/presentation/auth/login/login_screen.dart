@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:dino_lab/app/app_bootstrapper.dart';
 import 'package:dino_lab/presentation/auth/auth_bloc/auth_bloc.dart';
@@ -33,8 +31,9 @@ class LoginScreenContent extends StatefulWidget {
 class _LoginScreenContentState extends State<LoginScreenContent> {
   late final TextEditingController passwordController;
   late final TextEditingController loginController;
-  final _errors = <String, String?>{};
   late final OverlayLoaderHelper _overlayLoaderHelper;
+  late final GlobalKey<FormState> _loginFromKey;
+  bool _showRemoteError = false;
 
   @override
   void initState() {
@@ -43,38 +42,38 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
     loginController = TextEditingController();
     passwordController = TextEditingController();
     _overlayLoaderHelper = OverlayLoaderHelper();
+    _loginFromKey = GlobalKey<FormState>();
   }
 
   @override
   Widget build(BuildContext context) {
     final authScreensTheme = AuthScreensTheme.of(context);
 
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18.0),
-        child: BlocConsumer<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is AuthLoadingState) {
-              _overlayLoaderHelper.show(context);
-            } else {
-              _overlayLoaderHelper.hide();
-            }
-          },
-          builder: (context, state) {
-            return SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          child: BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              switch (state) {
+                case AuthLoadingState():
+                  _overlayLoaderHelper.show(context);
+                case AuthLoadedState():
+                  _overlayLoaderHelper.hide();
+                  context.router.replaceAll([HomeRoute()]);
+                case AuthErrorState():
+                  _showRemoteError = true;
+                  _overlayLoaderHelper.hide();
+                default:
+                  _overlayLoaderHelper.hide();
+              }
+            },
+            child: Form(
+              key: _loginFromKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      width: 100.0,
-                    ),
-                  ),
-                 
                   HBox(height: 20.0),
                   Text(
                     'Log in',
@@ -85,23 +84,41 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                     controller: loginController,
                     hintText: 'Login',
                     title: 'Login, email or mobile number',
-                    errorText: _errors['login'],
+                    validator: (text) => text.defaultInputValidator(),
+                    onChanged: (value) {
+                      setState(() {
+                        _showRemoteError = false;
+                      });
+                    },
                   ),
                   HBox(height: 20.0),
-                  InputFiledSection(
-                    controller: passwordController,
-                    title: 'Password',
-                    hintText: 'Password',
-                    isPasswordField: true,
-                    errorText: _errors['password'] ??
-                        (state is AuthErrorState ? state.errorMessage : null),
+                  BlocBuilder<AuthBloc, AuthState>(
+                    builder: (context, state) {
+                      return InputFiledSection(
+                        controller: passwordController,
+                        title: 'Password',
+                        hintText: 'Password',
+                        isPasswordField: true,
+                        validator: (text) => text.defaultInputValidator(),
+                        errorText: _showRemoteError
+                            ? (state is AuthErrorState
+                                ? state.errorMessage
+                                : null)
+                            : null,
+                        onChanged: (value) {
+                          setState(() {
+                            _showRemoteError = false;
+                          });
+                        },
+                      );
+                    },
                   ),
                   HBox(height: 20.0),
                   SizedBox(
                     width: double.infinity,
                     height: 50.0,
                     child: PrimaryButton(
-                      onTap: onLoginTap,
+                      onTap: _onLoginTap,
                       text: 'LOG IN',
                     ),
                   ),
@@ -117,47 +134,25 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                     ),
                   ),
                   HBox(height: 20.0),
-                  
                 ],
               ),
-            );
-          },
+            ),
+          ),
         ),
       ),
     );
   }
 
-  void onLoginTap() {
-    final loginErrors = validateText(loginController.text);
-    final passwordErrors = validateText(passwordController.text);
+  void _onLoginTap() {
+    final isValid = _loginFromKey.currentState?.validate() ?? false;
 
-    _errors['login'] = loginErrors;
-    _errors['password'] = passwordErrors;
-
-    setState(() {});
-    if (loginErrors != null || passwordErrors != null) return;
+    if (!isValid) return;
 
     context.read<AuthBloc>().add(
           AuthEvent.login(
             email: loginController.text,
             password: passwordController.text,
-            onSuccess: () {
-              log(
-                'yeeeeeee'.toString(),
-                name: 'eeeee',
-              );
-            },
           ),
         );
-  }
-
-  String? validateText(String value) {
-    if (value.isEmpty) {
-      return 'Text must be at least 1 character long';
-    } else if (value.length > 50) {
-      return 'Text must not exceed 50 characters';
-    }
-
-    return null;
   }
 }

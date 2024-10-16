@@ -5,16 +5,27 @@ import 'package:dino_lab/router/app_router.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   final List<AutoRoute> routes = [
-    AutoRoute(
-      page: HomeRoute.page,
-    ),
-
-    AutoRoute(
-      page: RegistrationRoute.page,
-    ),
-    AutoRoute(
-      page: LoginRoute.page,
-      initial: true,
-    ),
+    // AutoRoute(
+    //   page: EmptyShellRoute('authenticated'),
+    //   children: [
+        AutoRoute(
+          initial: true,
+          page: HomeRoute.page,
+        ),
+    //   ],
+    // ),
+    // AutoRoute(
+    //   initial: true,
+    //   page: EmptyShellRoute('unauthenticated'),
+    //   children: [
+        AutoRoute(
+          page: RegistrationRoute.page,
+        ),
+        AutoRoute(
+          initial: true,
+          page: LoginRoute.page,
+        ),
+      // ],
+    // ),
   ];
 }

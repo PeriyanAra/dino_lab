@@ -34,7 +34,7 @@ class AppBootstrapper extends ServiceLocator {
         ),
       );
 
-      registerLazySingleton<AuthBloc>(
+      registerFactory<AuthBloc>(
         () => AuthBloc(
           authRepository: get(),
         ),
