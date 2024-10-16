@@ -43,6 +43,9 @@ class DinoLabInputFieldTheme extends ThemeExtension<DinoLabInputFieldTheme> {
   TextStyle get hintTextStyle =>
       _textTheme.headlineMedium.copyWith(color: DinoLabColorsPalette.black60);
 
+  TextStyle get emptyErrorTextStyle =>
+      _textTheme.headlineMedium.copyWith(fontSize:0.0);
+
   TextStyle get primaryTextStyle => _textTheme.headlineMedium;
 
   double get hideIconSize => 10.0;

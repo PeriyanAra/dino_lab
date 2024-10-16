@@ -19,7 +19,7 @@ class PrimaryButtonTheme extends ThemeExtension<PrimaryButtonTheme> {
             ),
           ),
         ),
-        backgroundColor: WidgetStatePropertyAll(_colorTheme.primary),
+        backgroundColor: _colorTheme.primary,
       );
 
   TextStyle get textStyle => _textTheme.headlineMedium.copyWith(

@@ -34,10 +34,11 @@ class _DinoLabInputFieldState extends State<DinoLabInputField> {
       controller: widget.textEditingController,
       style: inputTheme.primaryTextStyle,
       validator: widget.validator,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      autovalidateMode: AutovalidateMode.disabled,
       onChanged: widget.onChanged,
       decoration: InputDecoration(
         hintText: widget.hintText,
+        errorStyle:widget.errorText?.isEmpty  ?? false? inputTheme.emptyErrorTextStyle:null,
         enabledBorder: inputTheme.enabledBorder,
         focusedBorder: inputTheme.focusedBorder,
         errorBorder: inputTheme.errorBorder,

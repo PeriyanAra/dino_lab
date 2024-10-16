@@ -2,7 +2,7 @@ import 'package:dino_lab/presentation/common/index.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final String text;
 
   const PrimaryButton({

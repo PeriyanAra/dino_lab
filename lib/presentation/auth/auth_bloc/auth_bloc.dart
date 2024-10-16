@@ -47,6 +47,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _AuthRegisterEvent event,
     Emitter<AuthState> emit,
   ) async {
+    emit(AuthState.loading());
+
     final registerRequestEntity = RegisterRequestEntity(
       email: event.email,
       name: event.name,
@@ -70,6 +72,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _AuthLogoutEvent event,
     Emitter<AuthState> emit,
   ) async {
+    emit(AuthState.loading());
+
     final response = await _authRepository.logout();
 
     response.when(
