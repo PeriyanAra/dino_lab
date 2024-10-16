@@ -37,8 +37,9 @@ class DinoLabColor extends Color implements WidgetStateProperty<Color> {
 
   @override
   Color resolve(Set<WidgetState> states) {
-    if (states.contains(WidgetState.disabled))
+    if (states.contains(WidgetState.disabled)) {
       return _compLight ?? _compDark ?? this;
+    }
 
     if (states.contains(WidgetState.pressed) ||
         states.contains(WidgetState.dragged) ||

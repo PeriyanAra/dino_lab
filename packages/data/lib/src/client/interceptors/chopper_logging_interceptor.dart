@@ -60,21 +60,21 @@ class ChopperLoggingInterceptor implements Interceptor {
   }
 
   void _prettyPrintObject(Object data, {String? header}) {
-    String _value;
+    String value;
 
     try {
       final object = const JsonDecoder().convert(data.toString()) as Object;
       const json = JsonEncoder.withIndent('    ');
-      _value = json.convert(object);
+      value = json.convert(object);
     } catch (e) {
-      _value = data.toString();
+      value = data.toString();
     }
 
-    _value = '║  ${_value.trim().replaceAll('\n', '\n║  ')}';
+    value = '║  ${value.trim().replaceAll('\n', '\n║  ')}';
 
     logPrint('╔  $header');
     logPrint('║');
-    logPrint(_value);
+    logPrint(value);
     logPrint('║');
     _printLine(pre: '╚');
   }
@@ -100,10 +100,10 @@ class ChopperLoggingInterceptor implements Interceptor {
 
   void _commit(LogLevel level) {
     if (level.priority >= LogLevel.error.priority) {
-      final _valueError = _value.toString();
-      final _errorTitle = _valueError.substring(0, _valueError.indexOf('\n'));
-      final _errorBody = _valueError.substring(_errorTitle.length);
-      _logger.data.log(level, _errorTitle, _errorBody);
+      final valueError = _value.toString();
+      final errorTitle = valueError.substring(0, valueError.indexOf('\n'));
+      final errorBody = valueError.substring(errorTitle.length);
+      _logger.data.log(level, errorTitle, errorBody);
     } else {
       _logger.data.log(level, _value.toString());
     }

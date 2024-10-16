@@ -17,8 +17,6 @@ dependencies:
   loggy: ^2.0.3
 
 dev_dependencies:
-  analyzer_rules:
-    path: ../analyzer_rules
   build_runner: ^2.4.13
   flutter_test:
     sdk: flutter

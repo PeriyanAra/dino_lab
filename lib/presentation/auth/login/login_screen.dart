@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:dino_lab/app/app_bootstrapper.dart';
 import 'package:dino_lab/presentation/auth/auth_bloc/auth_bloc.dart';
@@ -66,7 +64,6 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                
                   Align(
                     alignment: Alignment.topRight,
                     child: Image.asset(
@@ -74,7 +71,6 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                       width: 100.0,
                     ),
                   ),
-                 
                   HBox(height: 20.0),
                   Text(
                     'Log in',
@@ -117,7 +113,6 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                     ),
                   ),
                   HBox(height: 20.0),
-                  
                 ],
               ),
             );
@@ -142,10 +137,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
             email: loginController.text,
             password: passwordController.text,
             onSuccess: () {
-              log(
-                'yeeeeeee'.toString(),
-                name: 'eeeee',
-              );
+              _overlayLoaderHelper.hide();
             },
           ),
         );

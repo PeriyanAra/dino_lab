@@ -10,6 +10,6 @@ class HomeState with _$HomeState {
   }) = HomeLoadedState;
 
   const factory HomeState.error({
-    required String errorMessage,
+    required String? errorMessage,
   }) = HomeErrorState;
 }

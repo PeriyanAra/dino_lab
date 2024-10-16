@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dino_lab/app/app_bootstrapper.dart';
+import 'package:dino_lab/presentation/common/index.dart';
 import 'package:dino_lab/presentation/home/home_bloc/home_bloc.dart';
 import 'package:dino_lab/presentation/home/widgets/home_error_content.dart';
 import 'package:dino_lab/presentation/home/widgets/home_loaded_content.dart';
@@ -29,19 +30,21 @@ class HomeScreenContentBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.indigoAccent,
-        elevation: 0,
-        centerTitle: true,
+      appBar: DinoLabAppBar(
+        title: Text(
+          'HomeScreen',
+          style: DinoLabAppBarTheme.of(context).titleTextStyle,
+        ),
+        backgroundColor: DinoLabAppBarTheme.of(context).primaryBackgroundColor,
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           return switch (state) {
             HomeLoadedState(:final profileViewModel) => HomeLoadedContent(
-                homeScreenViewModel: profileViewModel,
+                profileViewModel: profileViewModel,
               ),
             HomeErrorState(:final errorMessage) => HomeErrorContent(
-                errorMessage: errorMessage,
+                errorMessage: errorMessage ?? 'Something went wrong',
               ),
             _ => const HomeLoadingContent(),
           };

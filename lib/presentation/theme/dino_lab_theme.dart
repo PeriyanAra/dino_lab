@@ -1,5 +1,6 @@
 import 'package:dino_lab/presentation/auth/theme/index.dart';
 import 'package:dino_lab/presentation/common/index.dart';
+import 'package:dino_lab/presentation/home/theme/home_screen_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:dino_lab/presentation/theme/index.dart';
 
@@ -11,7 +12,6 @@ class DinoLabTheme {
       colorTheme: colorTheme,
       textTheme: textTheme,
     );
-
     final secondaryButtonTheme = SecondaryButtonTheme(
       colorTheme: colorTheme,
       textTheme: textTheme,
@@ -26,6 +26,14 @@ class DinoLabTheme {
     );
     final overlayLoaderHelperTheme = OverlayLoaderHelperTheme(
       colorTheme: colorTheme,
+    );
+    final homeScreenTheme = HomeScreenTheme(
+      colorTheme: colorTheme,
+      textTheme: textTheme,
+    );
+    final dinoLabAppBarTheme = DinoLabAppBarTheme(
+      colorTheme: colorTheme,
+      textTheme: textTheme,
     );
 
     return ThemeData(
@@ -45,6 +53,8 @@ class DinoLabTheme {
         dinoLabInputFieldTheme,
         authScreensTheme,
         overlayLoaderHelperTheme,
+        homeScreenTheme,
+        dinoLabAppBarTheme,
       ],
       textTheme: TextTheme(),
     );
@@ -57,12 +67,10 @@ class DinoLabTheme {
       colorTheme: colorTheme,
       textTheme: textTheme,
     );
-
     final secondaryButtonTheme = SecondaryButtonTheme(
       colorTheme: colorTheme,
       textTheme: textTheme,
     );
-
     final dinoLabInputFieldTheme = DinoLabInputFieldTheme(
       colorTheme: colorTheme,
       textTheme: textTheme,
@@ -73,6 +81,14 @@ class DinoLabTheme {
     );
     final overlayLoaderHelperTheme = OverlayLoaderHelperTheme(
       colorTheme: colorTheme,
+    );
+    final homeScreenTheme = HomeScreenTheme(
+      colorTheme: colorTheme,
+      textTheme: textTheme,
+    );
+    final dinoLabAppBarTheme = DinoLabAppBarTheme(
+      colorTheme: colorTheme,
+      textTheme: textTheme,
     );
 
     return ThemeData(
@@ -92,6 +108,8 @@ class DinoLabTheme {
         dinoLabInputFieldTheme,
         authScreensTheme,
         overlayLoaderHelperTheme,
+        homeScreenTheme,
+        dinoLabAppBarTheme,
       ],
     );
   }

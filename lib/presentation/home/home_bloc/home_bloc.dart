@@ -33,7 +33,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ),
       failure: (f) => emit(
         HomeState.error(
-          errorMessage: 'errorMessage',
+          errorMessage: f.errorMessage,
         ),
       ),
     );
