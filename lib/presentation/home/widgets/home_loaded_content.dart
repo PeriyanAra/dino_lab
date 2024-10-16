@@ -3,6 +3,7 @@ import 'package:dino_lab/presentation/auth/auth_bloc/auth_bloc.dart';
 import 'package:dino_lab/presentation/common/index.dart';
 import 'package:dino_lab/presentation/home/theme/home_screen_theme.dart';
 import 'package:dino_lab/presentation/home/view_models/index.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,8 +45,8 @@ class _HomeLoadedContentState extends State<HomeLoadedContent> {
             _overlayLoaderHelper.hide();
             DialogHelper.show(
               context,
-              title: errorMessage ?? 'aaaa',
-              buttonText: "Ok",
+              title: errorMessage ?? 'somethingWentWrong'.tr(),
+              buttonText: 'ok'.tr().toUpperCase(),
             );
           default:
             _overlayLoaderHelper.hide();
@@ -81,7 +82,7 @@ class _HomeLoadedContentState extends State<HomeLoadedContent> {
                   onTap: () => context.read<AuthBloc>().add(
                         AuthEvent.logout(),
                       ),
-                  text: 'LOG OUT',
+                  text: 'logOut'.tr().toUpperCase(),
                 ),
               ),
             ),

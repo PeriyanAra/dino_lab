@@ -1,11 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
+
 extension NullableStringExtensions on String? {
   String? defaultInputValidator() {
     if (this == null) {
-      return 'This field must be not empty';
+      return 'nullField'.tr();
     } else if (this!.isEmpty) {
-      return 'This field must be at least 1 character long';
+      return 'emptyField'.tr();
     } else if (this!.length > 50) {
-      return 'This field must not exceed 50 characters';
+      return 'moreThen50CharacterField'.tr();
     }
 
     return null;
@@ -13,16 +15,16 @@ extension NullableStringExtensions on String? {
 
   String? emailInputValidator() {
     if (this == null) {
-      return 'This field must be not empty';
+      return 'nullField'.tr();
     } else if (this!.isEmpty) {
-      return 'This field must be at least 1 character long';
+      return 'emptyField'.tr();
     } else if (this!.length > 50) {
-      return 'This field must not exceed 50 characters';
+      return 'moreThen50CharacterField'.tr();
     } else {
       final emailValidationRegExp = RegExp(r'.+@.+\..+');
       final isValid = emailValidationRegExp.hasMatch(this!);
 
-      if (!isValid) return 'Email is incorrect';
+      if (!isValid) return 'emailFormatIncorrect'.tr();
     }
 
     return null;

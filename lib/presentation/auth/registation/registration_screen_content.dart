@@ -3,6 +3,8 @@ import 'package:dino_lab/presentation/auth/auth_bloc/auth_bloc.dart';
 import 'package:dino_lab/presentation/auth/theme/index.dart';
 import 'package:dino_lab/presentation/auth/widgets/input_filed_section.dart';
 import 'package:dino_lab/presentation/common/index.dart';
+import 'package:dino_lab/router/app_router.gr.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,7 +43,7 @@ class _RegistrationScreenContentState extends State<RegistrationScreenContent> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          padding: authScreensTheme.contentPadding,
           child: BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
               switch (state) {
@@ -62,16 +64,16 @@ class _RegistrationScreenContentState extends State<RegistrationScreenContent> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  HBox(height: 20.0),
+                  HBox(height: authScreensTheme.heightSmall),
                   Text(
-                    'Log in',
+                    'signUp'.tr(),
                     style: authScreensTheme.titleTextStyle,
                   ),
-                  HBox(height: 40.0),
+                  HBox(height: authScreensTheme.heightMedium),
                   InputFiledSection(
                     controller: _loginController,
-                    hintText: 'Login',
-                    title: 'Login, email or mobile number',
+                    hintText: 'email'.tr(),
+                    title: 'email'.tr(),
                     validator: (text) => text.emailInputValidator(),
                     onChanged: (value) {
                       setState(() {
@@ -79,11 +81,11 @@ class _RegistrationScreenContentState extends State<RegistrationScreenContent> {
                       });
                     },
                   ),
-                  HBox(height: 20.0),
+                  HBox(height: authScreensTheme.heightSmall),
                   InputFiledSection(
                     controller: _passwordController,
-                    title: 'Password',
-                    hintText: 'Password',
+                    title: 'password'.tr(),
+                    hintText: 'password'.tr(),
                     isPasswordField: true,
                     validator: (text) => text.defaultInputValidator(),
                     onChanged: (value) {
@@ -92,13 +94,13 @@ class _RegistrationScreenContentState extends State<RegistrationScreenContent> {
                       });
                     },
                   ),
-                  HBox(height: 20.0),
+                  HBox(height: authScreensTheme.heightSmall),
                   BlocBuilder<AuthBloc, AuthState>(
                     builder: (context, state) {
                       return InputFiledSection(
                         controller: _nameController,
-                        title: 'Name',
-                        hintText: 'Name',
+                        title: 'name'.tr(),
+                        hintText: 'name'.tr(),
                         validator: (text) => text.defaultInputValidator(),
                         errorText: _showRemoteError
                             ? (state is AuthErrorState
@@ -108,15 +110,25 @@ class _RegistrationScreenContentState extends State<RegistrationScreenContent> {
                       );
                     },
                   ),
-                  HBox(height: 20.0),
+                  HBox(height: authScreensTheme.heightSmall),
                   SizedBox(
                     width: double.infinity,
-                    height: 50.0,
+                    height: authScreensTheme.heightLarge,
                     child: PrimaryButton(
                       onTap: _onSignUpTap,
-                      text: 'SIGN UP',
+                      text: 'signUp'.tr().toUpperCase(),
                     ),
                   ),
+                  HBox(height: authScreensTheme.heightSmall),
+                  SizedBox(
+                    width: double.infinity,
+                    height: authScreensTheme.heightLarge,
+                    child: SecondaryButton(
+                      onTap: () => context.router.replaceAll([LoginRoute()]),
+                      text: 'login'.tr().toUpperCase(),
+                    ),
+                  ),
+                  HBox(height: authScreensTheme.heightSmall),
                 ],
               ),
             ),

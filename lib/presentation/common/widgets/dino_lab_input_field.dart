@@ -1,7 +1,5 @@
 import 'package:dino_lab/presentation/common/index.dart';
-import 'package:dino_lab/presentation/theme/index.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class DinoLabInputField extends StatefulWidget {
   final TextEditingController textEditingController;
@@ -35,7 +33,7 @@ class _DinoLabInputFieldState extends State<DinoLabInputField> {
     return TextFormField(
       controller: widget.textEditingController,
       style: inputTheme.primaryTextStyle,
-      validator:  widget.validator,
+      validator: widget.validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       onChanged: widget.onChanged,
       decoration: InputDecoration(
@@ -46,25 +44,13 @@ class _DinoLabInputFieldState extends State<DinoLabInputField> {
         focusedErrorBorder: inputTheme.focusedBorder,
         errorText: widget.errorText,
         suffixIcon: widget.isPasswordField
-            ? GestureDetector(
-                behavior: HitTestBehavior.opaque,
+            ? PasswordInputRelativeIconButton(
                 onTap: () {
                   setState(() {
                     isRevealed = !isRevealed;
                   });
                 },
-                child: SvgPicture.asset(
-                  isRevealed
-                      ? 'assets/icons/ic_password_obfuscate_visible.svg'
-                      : 'assets/icons/ic_password_obfuscate_invisible.svg',
-                  width: 10.0,
-                  height: 10.0,
-                  fit: BoxFit.scaleDown,
-                  colorFilter: ColorFilter.mode(
-                    DinoLabColorsPalette.black35,
-                    BlendMode.srcIn,
-                  ),
-                ),
+                isRevealed: isRevealed,
               )
             : null,
         hintStyle: inputTheme.hintTextStyle,

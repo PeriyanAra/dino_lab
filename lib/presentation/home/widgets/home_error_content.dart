@@ -1,3 +1,4 @@
+import 'package:dino_lab/presentation/home/theme/home_screen_theme.dart';
 import 'package:flutter/material.dart';
 
 class HomeErrorContent extends StatelessWidget {
@@ -11,7 +12,7 @@ class HomeErrorContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: HomeScreenTheme.of(context).errorContentPadding,
       child: Center(
         child: Text(
           errorMessage,
