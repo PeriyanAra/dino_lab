@@ -7,6 +7,7 @@ import 'package:dino_lab/presentation/common/index.dart';
 import 'package:dino_lab/router/app_router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 @RoutePage()
 class LoginScreen extends StatelessWidget {
@@ -53,7 +54,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          padding: authScreensTheme.contentPadding,
           child: BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
               switch (state) {
@@ -74,16 +75,16 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  HBox(height: 20.0),
+                  HBox(height: authScreensTheme.heightSmall),
                   Text(
-                    'Log in',
+                    'login'.tr().replaceAll(RegExp(r'g'), 'g '),
                     style: authScreensTheme.titleTextStyle,
                   ),
-                  HBox(height: 40.0),
+                  HBox(height: authScreensTheme.heightMedium),
                   InputFiledSection(
                     controller: loginController,
-                    hintText: 'Login',
-                    title: 'Login, email or mobile number',
+                    hintText: 'email'.tr(),
+                    title: 'email'.tr(),
                     validator: (text) => text.defaultInputValidator(),
                     onChanged: (value) {
                       setState(() {
@@ -91,13 +92,13 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                       });
                     },
                   ),
-                  HBox(height: 20.0),
+                  HBox(height: authScreensTheme.heightSmall),
                   BlocBuilder<AuthBloc, AuthState>(
                     builder: (context, state) {
                       return InputFiledSection(
                         controller: passwordController,
-                        title: 'Password',
-                        hintText: 'Password',
+                        title: 'password'.tr(),
+                        hintText: 'password'.tr(),
                         isPasswordField: true,
                         validator: (text) => text.defaultInputValidator(),
                         errorText: _showRemoteError
@@ -113,27 +114,30 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                       );
                     },
                   ),
-                  HBox(height: 20.0),
+                  HBox(height: authScreensTheme.heightSmall),
                   SizedBox(
                     width: double.infinity,
-                    height: 50.0,
+                    height: authScreensTheme.heightLarge,
                     child: PrimaryButton(
                       onTap: _onLoginTap,
-                      text: 'LOG IN',
+                      text: 'login'
+                          .tr()
+                          .replaceAll(RegExp(r'g'), 'g ')
+                          .toUpperCase(),
                     ),
                   ),
-                  HBox(height: 20.0),
+                  HBox(height: authScreensTheme.heightSmall),
                   SizedBox(
                     width: double.infinity,
-                    height: 50.0,
+                    height: authScreensTheme.heightLarge,
                     child: SecondaryButton(
                       onTap: () => context.router.push(
                         RegistrationRoute(),
                       ),
-                      text: 'SIGN UP',
+                      text: 'signUp'.tr(),
                     ),
                   ),
-                  HBox(height: 20.0),
+                  HBox(height: authScreensTheme.heightSmall),
                 ],
               ),
             ),

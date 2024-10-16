@@ -34,11 +34,18 @@ class DinoLabInputFieldTheme extends ThemeExtension<DinoLabInputFieldTheme> {
         ),
         borderRadius: BorderRadius.circular(10),
       );
-      
+
+  ColorFilter get hideIconColorFilter => ColorFilter.mode(
+        DinoLabColorsPalette.black35,
+        BlendMode.srcIn,
+      );
+
   TextStyle get hintTextStyle =>
       _textTheme.headlineMedium.copyWith(color: DinoLabColorsPalette.black60);
 
   TextStyle get primaryTextStyle => _textTheme.headlineMedium;
+
+  double get hideIconSize => 10.0;
 
   @override
   int get hashCode => Object.hash(

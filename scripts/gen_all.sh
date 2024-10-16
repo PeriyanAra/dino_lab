@@ -5,6 +5,9 @@ PACKAGES_DIR="$CWD/$PACKAGES_RELATIVE_PATH"
 
 fvm flutter packages pub run build_runner build --delete-conflicting-outputs
 
+fvm flutter pub run easy_localization:generate -O "lib/gen" -o app_localization.g.dart -S "assets/translations" &&
+fvm flutter pub run easy_localization:generate -f keys -O "lib/gen" -o locale_keys.g.dart -S "assets/translations"
+
 excludedPackages=("linter_rules")
 
 for package_name in $(ls $PACKAGES_DIR); do

@@ -11,7 +11,7 @@ class DinoLabAppBarTheme extends ThemeExtension<DinoLabAppBarTheme> {
   final DinoLabColorTheme _colorTheme;
   final DinoLabTextTheme _textTheme;
 
-  Color get primaryBackgroundColor => _colorTheme.primary;
+  Color get backgroundColor => _colorTheme.primary;
   TextStyle get titleTextStyle => _textTheme.titleLarge.copyWith(
         fontSize: 25,
         color: _colorTheme.backgroundPrimary,

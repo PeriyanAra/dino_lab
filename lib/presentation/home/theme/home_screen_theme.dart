@@ -18,6 +18,7 @@ class HomeScreenTheme extends ThemeExtension<HomeScreenTheme> {
   double get logoutButtonWidth => 200.0;
   double get logoutButtonHeight => 50.0;
   double get spaceBetweenAvatarAndUserName => 15.0;
+  EdgeInsets get errorContentPadding => EdgeInsets.all(16);
 
   @override
   int get hashCode => Object.hash(

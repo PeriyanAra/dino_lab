@@ -1,0 +1,12 @@
+{
+    "logOut": "log out",
+    "homeScreen": "Home Screen",
+    "login": "Login",
+    "signUp": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "nullField": "This field must be not empty",
+    "emptyField": "This field must be at least 1 character long",
+    "moreThen50CharacterField": "This field must not exceed 50 characters"
+}

@@ -1,5 +1,4 @@
 import 'package:dino_lab/presentation/common/index.dart';
-import 'package:dino_lab/presentation/theme/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -35,7 +34,7 @@ class _DinoLabInputFieldState extends State<DinoLabInputField> {
     return TextFormField(
       controller: widget.textEditingController,
       style: inputTheme.primaryTextStyle,
-      validator:  widget.validator,
+      validator: widget.validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       onChanged: widget.onChanged,
       decoration: InputDecoration(
@@ -46,30 +45,52 @@ class _DinoLabInputFieldState extends State<DinoLabInputField> {
         focusedErrorBorder: inputTheme.focusedBorder,
         errorText: widget.errorText,
         suffixIcon: widget.isPasswordField
-            ? GestureDetector(
-                behavior: HitTestBehavior.opaque,
+            ? _HideIcon(
                 onTap: () {
                   setState(() {
                     isRevealed = !isRevealed;
                   });
                 },
-                child: SvgPicture.asset(
-                  isRevealed
-                      ? 'assets/icons/ic_password_obfuscate_visible.svg'
-                      : 'assets/icons/ic_password_obfuscate_invisible.svg',
-                  width: 10.0,
-                  height: 10.0,
-                  fit: BoxFit.scaleDown,
-                  colorFilter: ColorFilter.mode(
-                    DinoLabColorsPalette.black35,
-                    BlendMode.srcIn,
-                  ),
-                ),
+                isRevealed: isRevealed,
               )
             : null,
         hintStyle: inputTheme.hintTextStyle,
       ),
       obscureText: widget.isPasswordField && isRevealed,
+    );
+  }
+}
+
+class _HideIcon extends StatefulWidget {
+  const _HideIcon({
+    required this.onTap,
+    required this.isRevealed,
+  });
+
+  final VoidCallback onTap;
+  final bool isRevealed;
+
+  @override
+  State<_HideIcon> createState() => _HideIconState();
+}
+
+class _HideIconState extends State<_HideIcon> {
+  @override
+  Widget build(BuildContext context) {
+    final inputTheme = DinoLabInputFieldTheme.of(context);
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: widget.onTap,
+      child: SvgPicture.asset(
+        widget.isRevealed
+            ? 'assets/icons/ic_password_obfuscate_visible.svg'
+            : 'assets/icons/ic_password_obfuscate_invisible.svg',
+        width: inputTheme.hideIconSize,
+        height: inputTheme.hideIconSize,
+        fit: BoxFit.scaleDown,
+        colorFilter: inputTheme.hideIconColorFilter,
+      ),
     );
   }
 }

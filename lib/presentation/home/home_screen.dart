@@ -7,6 +7,7 @@ import 'package:dino_lab/presentation/home/widgets/home_loaded_content.dart';
 import 'package:dino_lab/presentation/home/widgets/home_loading_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -31,11 +32,7 @@ class HomeScreenContentBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DinoLabAppBar(
-        title: Text(
-          'HomeScreen',
-          style: DinoLabAppBarTheme.of(context).titleTextStyle,
-        ),
-        backgroundColor: DinoLabAppBarTheme.of(context).primaryBackgroundColor,
+        title: 'homeScreen'.tr(),
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {

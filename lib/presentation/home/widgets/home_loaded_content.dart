@@ -1,6 +1,7 @@
 import 'package:dino_lab/presentation/common/index.dart';
 import 'package:dino_lab/presentation/home/theme/home_screen_theme.dart';
 import 'package:dino_lab/presentation/home/view_models/index.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class HomeLoadedContent extends StatelessWidget {
@@ -43,7 +44,7 @@ class HomeLoadedContent extends StatelessWidget {
               height: homeScreenTheme.logoutButtonHeight,
               child: PrimaryButton(
                 onTap: () {},
-                text: 'LOG OUT',
+                text: 'logOut'.tr().toUpperCase(),
               ),
             ),
           ),

@@ -1,11 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
+
 extension StringExtensions on String? {
   String? defaultInputValidator() {
     if (this == null) {
-      return 'This field must be not empty';
+      return 'nullField'.tr();
     } else if (this!.isEmpty) {
-      return 'This field must be at least 1 character long';
+      return 'emptyField'.tr();
     } else if (this!.length > 50) {
-      return 'This field must not exceed 50 characters';
+      return 'moreThen50CharacterField'.tr();
     }
 
     return null;
