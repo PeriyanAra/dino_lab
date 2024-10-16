@@ -1,0 +1,73 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+*.last_build_id
+*.lock
+lcov.info
+
+# Web related
+**/generated_plugin_registrant*
+tmp-dir/*
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+**/gen
+ios/Podfile.lock
+ios/build/
+macos/Podfile.lock
+packages/*/build/
+*.xcactivitylog
+DerivedData/
+
+# don't check in golden failure output
+**/failures/*.png
+.run/
+
+# Generated files
+*.g.dart
+*.gr.dart
+*.freezed.dart
+*.gen.dart
+*.moor.dart
+*.mocks.dart
+*.hive.dart
+*.config.dart
+*.chopper.dart
+/lib/generated/
+
+# FVM Version Cache
+.fvm/

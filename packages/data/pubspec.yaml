@@ -1,0 +1,32 @@
+name: data
+description: A new Flutter project.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  chopper: ^8.0.3
+  connectivity_plus: ^6.0.5
+  domain:
+    path: ../domain
+  flutter:
+    sdk: flutter
+  flutter_secure_storage: ^9.2.2
+  freezed: ^2.5.7
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  loggy: ^2.0.3
+  shared:
+    path: ../shared
+  sqflite: ^2.4.0
+
+dev_dependencies:
+  analyzer_rules:
+    path: ../analyzer_rules
+  build_runner: ^2.4.13
+  chopper_generator: ^8.0.3
+  flutter_test:
+    sdk: flutter
+  json_serializable: ^6.8.0

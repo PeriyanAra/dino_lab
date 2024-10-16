@@ -1,0 +1,26 @@
+name: domain
+description: A new Flutter project.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  data:
+    path: ../data
+  flutter:
+    sdk: flutter
+  freezed: ^2.5.7
+  freezed_annotation: ^2.4.4
+  shared:
+    path: ../shared
+  
+
+
+dev_dependencies:
+  analyzer_rules:
+    path: ../analyzer_rules
+  build_runner: ^2.4.13
+  flutter_test:
+    sdk: flutter
