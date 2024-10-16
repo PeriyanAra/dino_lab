@@ -16,6 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         super(AuthState.initial()) {
     on<_AuthLoginEvent>(_handleLogin);
     on<_AuthRegisterEvent>(_handleRegister);
+    on<_AuthLogoutEvent>(_handleLogout);
   }
 
   Future<void> _handleLogin(
@@ -23,7 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(AuthState.loading());
-    
+
     final loginRequestEntity = LoginRequestEntity(
       email: event.email,
       password: event.password,
@@ -54,6 +55,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     final response = await _authRepository.register(
         registerRequestEntity: registerRequestEntity);
+
+    response.when(
+      success: (_) => emit(AuthState.loaded()),
+      failure: (f) => emit(
+        AuthState.error(
+          errorMessage: f.errorMessage,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _handleLogout(
+    _AuthLogoutEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    final response = await _authRepository.logout();
+
     response.when(
       success: (_) => emit(AuthState.loaded()),
       failure: (f) => emit(

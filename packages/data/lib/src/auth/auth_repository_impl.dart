@@ -46,15 +46,20 @@ class AuthRepositoryImpl implements AuthRepository {
 
     return response.when(
       success: (data) {
-         unawaited(
+        unawaited(
           _authLocalDataSource.saveTokens(
             authResponseDto: data,
           ),
         );
-        
+
         return const Result.success(null);
       },
       failure: Result.failure,
     );
+  }
+
+  @override
+  Future<Result<void, FailureResult>> logout() {
+    return _authLocalDataSource.logout();
   }
 }

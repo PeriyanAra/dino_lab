@@ -39,4 +39,9 @@ class AuthRemoteDataSource extends AuthDataSource {
   }) {
     throw UnimplementedError();
   }
+  
+  @override
+  Future<Result<void, FailureResult>> logout() {
+    throw UnimplementedError();
+  }
 }

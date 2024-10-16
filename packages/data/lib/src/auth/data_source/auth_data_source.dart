@@ -13,4 +13,6 @@ abstract class AuthDataSource {
   Future<Result<void, FailureResult>> saveTokens({
     required AuthResponseDto authResponseDto,
   });
+
+  Future<Result<void, FailureResult>> logout();
 }

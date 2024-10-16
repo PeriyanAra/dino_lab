@@ -12,4 +12,6 @@ class AuthEvent with _$AuthEvent {
     required String name,
     required String password,
   }) = _AuthRegisterEvent;
+
+  const factory AuthEvent.logout() = _AuthLogoutEvent;
 }
