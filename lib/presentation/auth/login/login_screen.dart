@@ -49,100 +49,105 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
   @override
   Widget build(BuildContext context) {
     final authScreensTheme = AuthScreensTheme.of(context);
+    final isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom != 0;
 
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        body: Padding(
-          padding: authScreensTheme.contentPadding,
-          child: BlocListener<AuthBloc, AuthState>(
-            listener: (context, state) {
-              switch (state) {
-                case AuthLoadingState():
-                  _overlayLoaderHelper.show(context);
-                case AuthLoadedState():
-                  _overlayLoaderHelper.hide();
-                  context.router.replaceAll([PageRouteInfo('authenticated')]);
-                case AuthErrorState():
-                  _showRemoteError = true;
-                  _overlayLoaderHelper.hide();
-                default:
-                  _overlayLoaderHelper.hide();
-              }
-            },
-            child: Form(
-              key: _loginFromKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  HBox(height: authScreensTheme.heightSmall),
-                  Text(
-                    'login'.tr().replaceAll(RegExp(r'g'), 'g '),
-                    style: authScreensTheme.titleTextStyle,
-                  ),
-                  HBox(height: authScreensTheme.heightMedium),
-                  InputFiledSection(
-                    controller: loginController,
-                    hintText: 'email'.tr(),
-                    title: 'email'.tr(),
+    final body = Padding(
+      padding: isKeyboardVisible
+          ? authScreensTheme.contentPaddingWhenKeyboardVisible
+          : authScreensTheme.contentPadding,
+      child: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          switch (state) {
+            case AuthLoadingState():
+              _overlayLoaderHelper.show(context);
+            case AuthLoadedState():
+              _overlayLoaderHelper.hide();
+              context.router.replaceAll([PageRouteInfo('authenticated')]);
+            case AuthErrorState():
+              _showRemoteError = true;
+              _overlayLoaderHelper.hide();
+            default:
+              _overlayLoaderHelper.hide();
+          }
+        },
+        child: Form(
+          key: _loginFromKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              HBox(height: authScreensTheme.heightSmall),
+              Text(
+                'login'.tr().replaceAll(RegExp(r'g'), 'g '),
+                style: authScreensTheme.titleTextStyle,
+              ),
+              HBox(height: authScreensTheme.heightMedium),
+              InputFiledSection(
+                controller: loginController,
+                hintText: 'email'.tr(),
+                title: 'email'.tr(),
+                validator: (text) => text.defaultInputValidator(),
+                onChanged: (value) {
+                  setState(() {
+                    _showRemoteError = false;
+                  });
+                },
+              ),
+              HBox(height: authScreensTheme.heightSmall),
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  return InputFiledSection(
+                    controller: passwordController,
+                    title: 'password'.tr(),
+                    hintText: 'password'.tr(),
+                    isPasswordField: true,
                     validator: (text) => text.defaultInputValidator(),
+                    errorText: _showRemoteError
+                        ? (state is AuthErrorState ? state.errorMessage : null)
+                        : null,
                     onChanged: (value) {
                       setState(() {
                         _showRemoteError = false;
                       });
                     },
-                  ),
-                  HBox(height: authScreensTheme.heightSmall),
-                  BlocBuilder<AuthBloc, AuthState>(
-                    builder: (context, state) {
-                      return InputFiledSection(
-                        controller: passwordController,
-                        title: 'password'.tr(),
-                        hintText: 'password'.tr(),
-                        isPasswordField: true,
-                        validator: (text) => text.defaultInputValidator(),
-                        errorText: _showRemoteError
-                            ? (state is AuthErrorState
-                                ? state.errorMessage
-                                : null)
-                            : null,
-                        onChanged: (value) {
-                          setState(() {
-                            _showRemoteError = false;
-                          });
-                        },
-                      );
-                    },
-                  ),
-                  HBox(height: authScreensTheme.heightSmall),
-                  SizedBox(
-                    width: double.infinity,
-                    height: authScreensTheme.heightLarge,
-                    child: PrimaryButton(
-                      onTap: _onLoginTap,
-                      text: 'login'
-                          .tr()
-                          .replaceAll(RegExp(r'g'), 'g ')
-                          .toUpperCase(),
-                    ),
-                  ),
-                  HBox(height: authScreensTheme.heightSmall),
-                  SizedBox(
-                    width: double.infinity,
-                    height: authScreensTheme.heightLarge,
-                    child: SecondaryButton(
-                      onTap: () => context.router.push(
-                        RegistrationRoute(),
-                      ),
-                      text: 'signUp'.tr(),
-                    ),
-                  ),
-                  HBox(height: authScreensTheme.heightSmall),
-                ],
+                  );
+                },
               ),
-            ),
+              HBox(height: authScreensTheme.heightSmall),
+              SizedBox(
+                width: double.infinity,
+                height: authScreensTheme.heightLarge,
+                child: PrimaryButton(
+                  onTap: _onLoginTap,
+                  text:
+                      'login'.tr().replaceAll(RegExp(r'g'), 'g ').toUpperCase(),
+                ),
+              ),
+              HBox(height: authScreensTheme.heightSmall),
+              SizedBox(
+                width: double.infinity,
+                height: authScreensTheme.heightLarge,
+                child: SecondaryButton(
+                  onTap: () => context.router.push(
+                    RegistrationRoute(),
+                  ),
+                  text: 'signUp'.tr(),
+                ),
+              ),
+              HBox(height: authScreensTheme.heightSmall),
+            ],
           ),
         ),
+      ),
+    );
+
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        body: isKeyboardVisible
+            ? SingleChildScrollView(
+                child: body,
+              )
+            : body,
       ),
     );
   }

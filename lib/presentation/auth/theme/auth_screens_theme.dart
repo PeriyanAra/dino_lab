@@ -16,6 +16,12 @@ class AuthScreensTheme extends ThemeExtension<AuthScreensTheme> {
   TextStyle get subTitleTextStyle => _textTheme.bodyLarge;
 
   EdgeInsets get contentPadding => EdgeInsets.symmetric(horizontal: 18.0);
+  EdgeInsets get contentPaddingWhenKeyboardVisible => EdgeInsets.fromLTRB(
+        contentPadding.left,
+        20.0,
+        contentPadding.right,
+        0.0,
+      );
 
   double get heightSmall => 20.0;
   double get heightMedium => 40.0;
